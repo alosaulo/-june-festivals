@@ -41,7 +41,9 @@ public class WiimoteFacade : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        wiimote.ReadWiimoteData();
+        if(wiimote != null) { 
+            wiimote.ReadWiimoteData();
+        }
     }
 
     void InitWiimotes()
@@ -68,7 +70,10 @@ public class WiimoteFacade : MonoBehaviour
     {
         //wiimote.Accel.GetCalibratedAccelData();
         var array = wiimote.Accel.accel;
-        return new Vector3(array[0], array[2], array[1]);
+        int x = array[0] - 512;
+        int y = array[2] - 620;
+        int z = array[1] - 512;
+        return new Vector3(x, y, z);
     }
 
     public Vector2 GetIRVector() 

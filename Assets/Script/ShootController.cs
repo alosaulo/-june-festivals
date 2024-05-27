@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShootController : MonoBehaviour
@@ -13,7 +14,7 @@ public class ShootController : MonoBehaviour
 
     [SerializeField] float shootCooldown;
 
-    bool canShoot;
+    bool canShoot = true;
 
     // Start is called before the first frame update
     void Start()
@@ -33,9 +34,31 @@ public class ShootController : MonoBehaviour
 
     IEnumerator Shoot() 
     {
-        Instantiate(hookPrefab,aimController.GetAimTransformPosition(), hookPrefab.transform.rotation);
+        Vector2 ir = aimController.GetIR();
+
+        Vector3 viewportPos = Camera.main.ViewportToWorldPoint(new Vector3(ir.x, ir.y, Camera.main.nearClipPlane));
+        Vector3 worldPos = Camera.main.ViewportToWorldPoint(viewportPos);
+
+        Debug.Log("IR Vector: " + ir);
+        Debug.Log("World Position: " + worldPos);
+
+        Vector3 dir = viewportPos - Camera.main.transform.position;
+        dir.Normalize();
+
+        RaycastHit hitInfo;
+
+        Physics.Raycast(Camera.main.transform.position, dir * 10, out hitInfo) ;
+
+        Debug.DrawRay(Camera.main.transform.position, dir * 10, Color.magenta, 1);
+
+        HookController hook = Instantiate(hookPrefab, Camera.main.transform.position, Quaternion.LookRotation(dir)).GetComponent<HookController>();
+
+        hook.SetDirection(dir, hitInfo.point);
+
         canShoot = false;
+        
         yield return new WaitForSeconds(shootCooldown);
+        
         canShoot = true;
     }
 
