@@ -51,9 +51,7 @@ public class ShootController : MonoBehaviour
 
         Debug.DrawRay(Camera.main.transform.position, dir * 10, Color.magenta, 1);
 
-        HookController hook = Instantiate(hookPrefab, Camera.main.transform.position, Quaternion.LookRotation(dir)).GetComponent<HookController>();
-
-        hook.SetDirection(dir, hitInfo.point);
+        Instantiate(hookPrefab, Camera.main.transform.position, Quaternion.LookRotation(dir)).GetComponent<HookController>();
 
         canShoot = false;
         

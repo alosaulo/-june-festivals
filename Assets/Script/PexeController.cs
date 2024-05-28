@@ -59,9 +59,17 @@ public class PexeController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Hook") 
         {
-            LeanTween.color(gameObject, Color.red, 5f).setEase(LeanTweenType.clamp);
+            LeanTween.color(gameObject, Color.yellow, 0f);
             hooked = true;
-            //Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Hook") 
+        {
+            LeanTween.color(gameObject, Color.yellow, 0f);
+            hooked = true;
         }
     }
 
