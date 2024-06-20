@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -48,6 +49,11 @@ public class GameManager : MonoBehaviour
         if (trys <= 0 || time <= 0) 
         {
             gameover = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1)) 
+        {
+            SceneManager.LoadScene(0);
         }
 
     }

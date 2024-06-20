@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/fish-party.unity
+    guid: 387a43dbaec7fc249bff5f8062799e86
   m_configObjects: {}
